@@ -22,20 +22,19 @@ def bubble_sort(stuff):
     print(stuff) 
             
 #-------------MERGE SORT----------------
-def merge(left,right):
+def merge(left,right,start):
     
     
     
-def merge_sort(stuff):
-    size = len(stuff)
-    if size == 1:
+def merge_sort(stuff,start,end):
+    if start => end:
         return stuff
     
-    mid = (size-1)//2
+    mid = (end+start)//2
 
-    left = merge_sort(stuff[start:mid])
-    right = merge_sort(stuff[mid+1:size-1])
-    return merge(left,right)
+    left = merge_sort(stuff[start:mid],start,mid)
+    right = merge_sort(stuff[mid+1:end],mid+1,end)
+    return merge(left,right,start)
     
 
 def quick_sort(stuff):
