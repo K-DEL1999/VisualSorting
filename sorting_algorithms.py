@@ -59,14 +59,36 @@ def merge_sort(stuff,start,end):
     left = merge_sort(stuff[start:mid+1],start,mid)
     right = merge_sort(stuff[mid+1:end+1],mid+1,end)
     return merge(stuff,left,right,start)
+
+#-------------QUICK SORT----------------
+def quick_sort(stuff,start,end):
+    pivot = random.randint(start,end)
+    smaller = start  
+
+    for i in range(start,end):
+        if stuff[i] < stuff[pivot]:
+            stuff[i] ^= stuff[smaller]
+            stuff[smaller] ^= stuff[i]
+            stuff[i] ^= stuff[smaller]
+            smaller += 1 
+
+    if pivot != end:
+        pivot ^= end
+        end ^= pivot
+        pivot ^= end
+
+
+def quick_sort(stuff,start,end):
+    if start < end:
+        pi = partition(stuff,start,end)
+        quick_sort(stuff,start,pi)
+        quick_sort(stuff,pi+1,end)
     
-
-def quick_sort(stuff):
-    pass
-
 
 stuff = [1,40,9,6,7,0,0,3,-900,190]
 selection_sort(stuff) 
 bubble_sort(stuff)
 sorted_list = merge_sort(stuff,0,len(stuff)-1)
+print(sorted_list)
+sorted_list = quick_sort(stuff,0,len(stuff)-1)
 print(sorted_list)
