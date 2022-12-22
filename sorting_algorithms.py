@@ -47,7 +47,8 @@ def merge(stuff,left,right,start):
         stuff[current] = right[r]
         r += 1
         current += 1
-    
+
+    print(stuff)
     return stuff    
 
 def merge_sort(stuff,start,end):
@@ -55,6 +56,7 @@ def merge_sort(stuff,start,end):
         return stuff
     
     mid = (end+start)//2
+    print(start,mid,end)
 
     left = merge_sort(stuff[start:mid],start,mid)
     right = merge_sort(stuff[mid+1:end],mid+1,end)
