@@ -27,7 +27,7 @@ def merge(left,right,start):
     
     
 def merge_sort(stuff,start,end):
-    if start => end:
+    if start >= end:
         return stuff
     
     mid = (end+start)//2
