@@ -61,7 +61,7 @@ def merge_sort(stuff,start,end):
     return merge(stuff,left,right,start)
 
 #-------------QUICK SORT----------------
-def quick_sort(stuff,start,end):
+def partition(stuff,start,end):
     pivot = random.randint(start,end)
     smaller = start  
 
