@@ -23,7 +23,7 @@ def bubble_sort(stuff):
             
 #-------------MERGE SORT----------------
 def merge(left,right,start):
-    
+     
     
     
 def merge_sort(stuff,start,end):
@@ -34,7 +34,7 @@ def merge_sort(stuff,start,end):
 
     left = merge_sort(stuff[start:mid],start,mid)
     right = merge_sort(stuff[mid+1:end],mid+1,end)
-    return merge(left,right,start)
+    return merge(stuff,left,right,start)
     
 
 def quick_sort(stuff):
