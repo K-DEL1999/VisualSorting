@@ -33,8 +33,23 @@ def merge(stuff,left,right,start):
             stuff[current] = left[l]
             l += 1
             current += 1
+        else:
+            stuff[current] = right[r]
+            r += 1
+            current += 1
+
+    while l < left_size:
+        stuff[current] = left[l]
+        l += 1
+        current += 1
+
+    while r < right_size:
+        stuff[current] = right[r]
+        r += 1
+        current += 1
     
-    
+    return stuff    
+
 def merge_sort(stuff,start,end):
     if start >= end:
         return stuff
@@ -53,4 +68,5 @@ def quick_sort(stuff):
 stuff = [1,40,9,6,7,0,0,3,-900,190]
 selection_sort(stuff) 
 bubble_sort(stuff)
-sorted_list = merge_sort(stuff)
+sorted_list = merge_sort(stuff,0,len(stuff)-1)
+print(sorted_list)
