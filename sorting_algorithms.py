@@ -65,38 +65,38 @@ def merge_sort(stuff,start,end):
 #-------------QUICK SORT----------------
 def partition(stuff,start,end):
     pivot = random.randint(start,end)
-    partitioner = start  
-    
+    partitioner = start-1  
+
     if pivot != end:
         stuff[pivot] ^= stuff[end]
         stuff[end] ^= stuff[pivot]
         stuff[pivot] ^= stuff[end]
     
     for i in range(start,end):
-        if stuff[i] < stuff[end]:
-            stuff[i] ^= stuff[partitioner]
-            stuff[partitioner] ^= stuff[i]
-            stuff[i] ^= stuff[partitioner]
-            partitioner += 1
-    
-    stuff[partitioner] ^= stuff[end]
-    stuff[end] ^= stuff[partitioner]
-    stuff[partitioner] ^= stuff[end]
+        if stuff[i] <= stuff[end]:
+            partitioner += 1 
+            if stuff[i] != stuff[partitioner]:   
+                stuff[i] ^= stuff[partitioner]
+                stuff[partitioner] ^= stuff[i]
+                stuff[i] ^= stuff[partitioner]
 
-    return partitioner
+    if stuff[end] != stuff[partitioner+1]:
+        stuff[partitioner+1] ^= stuff[end]
+        stuff[end] ^= stuff[partitioner+1]
+        stuff[partitioner+1] ^= stuff[end]
+            
+    return partitioner+1
 
 def quick_sort(stuff,start,end):
     if start < end:
         pi = partition(stuff,start,end)
-        quick_sort(stuff,start,pi)
+        quick_sort(stuff,start,pi-1)
         quick_sort(stuff,pi+1,end)
-    
 
 stuff = [1,40,9,6,7,0,0,3,-900,190]
 selection_sort(stuff) 
 bubble_sort(stuff)
 sorted_list = merge_sort(stuff,0,len(stuff)-1)
 print(sorted_list)
-stuff = [1,40,9,6,7,0,0,3,-900,190]
 quick_sort(stuff,0,len(stuff)-1)
 print(stuff)
