@@ -1,5 +1,3 @@
-import random
-
 #-------------SELECTION SORT----------------
 def selection_sort(stuff):
     size = len(stuff)
@@ -93,6 +91,7 @@ def quick_sort(stuff,start,end):
         quick_sort(stuff,start,pi-1)
         quick_sort(stuff,pi+1,end)
 
+"""
 stuff = [1,40,9,6,7,0,0,3,-900,190]
 selection_sort(stuff) 
 bubble_sort(stuff)
@@ -100,3 +99,4 @@ sorted_list = merge_sort(stuff,0,len(stuff)-1)
 print(sorted_list)
 quick_sort(stuff,0,len(stuff)-1)
 print(stuff)
+"""
