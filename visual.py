@@ -1,17 +1,21 @@
 import random, pygame
 from sorting_algorithms import selection_sort
 
-class grid:
-    def __init__(self,grid,rows,columns):
-        self.grid = grid
-        self.rows = rows
-        self.columns = columns
+class rectangles:
+    def __init__ (self,rectangle_heights,num_of_rec,rectangle_width):
+        self.rectangle_heights = rectangle_heights
+        self.num_of_rec = num_of_rec
+        self.rectangle_width = rectangle_width
 
-def run_pygame(grid):
+def run_pygame(num_of_rec):
     screen_dimensions = initialize_screen_size()
     screen = initialize_pygame(screen_dimensions)
     clock = initialize_clock()
     
+    rectangle_heights = initialize_rectangle_heights(num_of_rec,screen_dimensions[1])
+    rectangle_width = initialize_rectangle_width(num_of_rec,screen_dimensions[0])
+    rects = rectangles(rectangle_heights,num_of_rec,rectangle_width)
+        
     running = True
 
     while running:
@@ -20,33 +24,32 @@ def run_pygame(grid):
                 running = False
 
         screen.fill((0,0,0))
-      
          
-        display_grid(screen,screen_dimensions,grid) 
+        display_rectangles(screen,rects,screen_dimensions) 
        
         clock.tick(5)
         pygame.display.flip()
+    
+    pygame.quit()
 
-def display_grid(screen,screen_dimensions,grid):
-    r = c = x = y = 0
-    width = screen_dimensions[0]/grid.columns
-    height = screen_dimensions[1]/grid.rows
+def display_rectangles(screen,rects,screen_dimensions):
+    screen_height = screen_dimensions[1]
+    
+    num_of_rec = rects.num_of_rec
+    rect_heights = rects.rectangle_heights
+    rect_width = rects.rectangle_width
+    
+    rect_x = rect_width/8
+    adjusted_width = rect_width*(3/4)
 
-    for i in range(len(grid.grid)): 
-        print(x,y)        
-        pygame.draw.rect(screen,(grid.grid[i]),pygame.Rect(x,y,width,height))
-        c += 1
-        if c == grid.columns:
-            x = 0
-            c = 0
-            r += 1
-            y = r*height
-        else:
-            x = c*width
+    for i in range(num_of_rec):
+        rect_y = screen_height - rect_heights[i]
+        pygame.draw.rect(screen,(160,160,160),pygame.Rect(rect_x,rect_y,adjusted_width,rect_heights[i]))
+        rect_x += rect_width
 
 def initialize_screen_size():
-    WIDTH = 1200
-    HEIGHT = 1200
+    WIDTH = 1500
+    HEIGHT = 1000
     return [WIDTH,HEIGHT]
 
 def initialize_pygame(screen_dimensions):
@@ -58,19 +61,19 @@ def initialize_clock():
     clock = pygame.time.Clock()
     return clock
 
-rows = int(input("How many rows: "))
-columns = int(input("How many columns: "))
+def initialize_rectangle_heights(num_of_rec,screen_height):
+    rectangles = []
 
-grid = grid([],rows,columns)
+    for i in range(num_of_rec):
+        rectangles.append((random.randint(0,101)/100) * screen_height)
+    return rectangles
 
-for i in range(rows*columns):
-        rgb = [(random.randint(0,255)),(random.randint(0,255)),(random.randint(0,255))]
-        grid.grid.append(rgb)
-
-
-run_pygame(grid)
-
-pygame.quit()
+def initialize_rectangle_width(num_of_rec,screen_width):
+    rectangle_width = screen_width / num_of_rec
+    return rectangle_width
+    
+num_of_rec = int(input("Input number of rectangles: "))
+run_pygame(num_of_rec)
 
 
 
