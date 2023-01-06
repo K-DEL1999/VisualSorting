@@ -2,10 +2,11 @@ import random, pygame
 from sorting_algorithms import selection_sort
 
 class rectangles:
-    def __init__ (self,rectangle_heights,num_of_rec,rectangle_width):
+    def __init__ (self,rectangle_heights,num_of_rec,rectangle_width,rectangle_colors):
         self.rectangle_heights = rectangle_heights
         self.num_of_rec = num_of_rec
         self.rectangle_width = rectangle_width
+        self.rectangle_colors = rectangle_colors
 
 def run_pygame(num_of_rec):
     screen_dimensions = initialize_screen_size()
@@ -14,8 +15,11 @@ def run_pygame(num_of_rec):
     
     rectangle_heights = initialize_rectangle_heights(num_of_rec,screen_dimensions[1])
     rectangle_width = initialize_rectangle_width(num_of_rec,screen_dimensions[0])
-    rects = rectangles(rectangle_heights,num_of_rec,rectangle_width)
-        
+    rectangle_colors = initialize_colors(num_of_rec)
+    rects = rectangles(rectangle_heights,num_of_rec,rectangle_width,rectangle_colors)
+ 
+    rects_index = 0 # once rects index equals size of rects list then we stop sorting
+
     running = True
 
     while running:
@@ -23,18 +27,39 @@ def run_pygame(num_of_rec):
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill((0,0,0))
-         
+        screen.fill((255,255,255))
+                 
         display_rectangles(screen,rects,screen_dimensions) 
-       
-        clock.tick(5)
+        
+        if rects_index < num_of_rec:
+            insertion_sort_step(rects,rects_index)
+            rects_index += 1
+        
+        clock.tick(4)
         pygame.display.flip()
     
     pygame.quit()
 
+def insertion_sort_step(rects,start_index):
+    min_val_index = start_index
+
+    for i in range(start_index+1,num_of_rec):
+        if rects.rectangle_heights[i] < rects.rectangle_heights[min_val_index]:
+            min_val_index = i
+
+    if rects.rectangle_heights[start_index] != rects.rectangle_heights[min_val_index]:
+        temp = rects.rectangle_heights[start_index]
+        rects.rectangle_heights[start_index] = rects.rectangle_heights[min_val_index] 
+        rects.rectangle_heights[min_val_index] = temp
+
+        temp = rects.rectangle_colors[start_index]
+        rects.rectangle_colors[start_index] = rects.rectangle_colors[min_val_index] 
+        rects.rectangle_colors[min_val_index] = temp
+
 def display_rectangles(screen,rects,screen_dimensions):
     screen_height = screen_dimensions[1]
-    
+    colors = rects.rectangle_colors    
+
     num_of_rec = rects.num_of_rec
     rect_heights = rects.rectangle_heights
     rect_width = rects.rectangle_width
@@ -44,7 +69,7 @@ def display_rectangles(screen,rects,screen_dimensions):
 
     for i in range(num_of_rec):
         rect_y = screen_height - rect_heights[i]
-        pygame.draw.rect(screen,(160,160,160),pygame.Rect(rect_x,rect_y,adjusted_width,rect_heights[i]))
+        pygame.draw.rect(screen,colors[i],pygame.Rect(rect_x,rect_y,adjusted_width,rect_heights[i]))
         rect_x += rect_width
 
 def initialize_screen_size():
@@ -71,6 +96,14 @@ def initialize_rectangle_heights(num_of_rec,screen_height):
 def initialize_rectangle_width(num_of_rec,screen_width):
     rectangle_width = screen_width / num_of_rec
     return rectangle_width
+
+def initialize_colors(num_of_rec):
+    colors = []
+
+    for i in range(num_of_rec):
+        colors.append([random.randint(0,255),random.randint(0,255),random.randint(0,255)])
+
+    return colors
     
 num_of_rec = int(input("Input number of rectangles: "))
 run_pygame(num_of_rec)
